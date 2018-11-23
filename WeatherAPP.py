@@ -4,10 +4,11 @@ import urllib.request
 import tkinter
 import sys
 import os
-# created by AP
-from tkinter import PhotoImage
 
-city = input("Enter City Name :")
+import utils.timeHelper
+import utils.common
+
+city = input("Please enter the City Name :")
 
 def time_converter(time):
     converted_time = datetime.datetime.fromtimestamp(
@@ -34,26 +35,7 @@ def data_fetch(full_api_url):
     return raw_api_dict
 
 
-def data_organizer(raw_api_dict):
-    data = dict(
-        city=raw_api_dict.get('name'),
-        country=raw_api_dict.get('sys').get('country'),
-        temp=raw_api_dict.get('main').get('temp'),
-        temp_max=raw_api_dict.get('main').get('temp_max'),
-        temp_min=raw_api_dict.get('main').get('temp_min'),
-        humidity=raw_api_dict.get('main').get('humidity'),
-        pressure=raw_api_dict.get('main').get('pressure'),
-        sky=raw_api_dict['weather'][0]['main'],
-        sunrise=time_converter(raw_api_dict.get('sys').get('sunrise')),
-        sunset=time_converter(raw_api_dict.get('sys').get('sunset')),
-        wind=raw_api_dict.get('wind').get('speed'),
-        wind_deg=raw_api_dict.get('deg'),
-        dt=time_converter(raw_api_dict.get('dt')),
-        cloudiness=raw_api_dict.get('clouds').get('all'),
-        typeid=raw_api_dict['weather'][0]['id'],
-        wtype=raw_api_dict['weather'][0]['description']
-    )
-    return data
+
 
 
 def data_output(data):
@@ -93,9 +75,9 @@ def data_output(data):
     print (str(citid) + ", " + str(countryid))
     global root
     root = tkinter.Tk()
-    root.geometry('900x515')
+    root.geometry('900x515') # Controls the size of the window.
     root.title('Weather in:'+ " "  + str(citid) + ", " + str(countryid))
-    root.wm_iconbitmap('wicon.ico')
+    #root.wm_iconbitmap('home/hchanan/Desktop/PersonalProjects/weather/wicon.ico')
     #temperature
     temp=tkinter.Label(text= str(wtempid)+ "°C    ", font=("Courier", 28, 'bold'))
     temp.grid(row=0, column=5)
@@ -112,7 +94,7 @@ if __name__ == '__main__':
     try:
         data_output(data_organizer(data_fetch(url_builder(city)))) #zip code id (xxxxxxx) goes here
     except IOError:
-        print('no internet')
+        print('Something went wrong. Please try again.')
 
 
 # test print (weatherid)
@@ -131,7 +113,7 @@ imgtemp.grid(row=0, column=0)
 
 #temp=tkinter.Label(text='Temp      ', font=("Courier", 28, 'bold'))
 #temp.grid(row=0, column=5)
-#created by AP
+
 #wind image
 windimg=tkinter.PhotoImage(file="id2.gif")
 
@@ -438,4 +420,4 @@ if weatherid=='804':
     typew.grid(row=0, column=6,  columnspan=3, rowspan=2, padx=5, pady=5)
 
 root.mainloop()
-#Created by AP
+
