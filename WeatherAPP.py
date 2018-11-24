@@ -1,58 +1,27 @@
-import datetime
-import json
-import urllib.request
 import tkinter
-import sys
 import os
 
+#internal imports
 from services.organizeWeatherData import weatherDataOrganizer
-
-city = input("Please enter the City Name :")
-
-def time_converter(time):
-    converted_time = datetime.datetime.fromtimestamp(
-        int(time)
-    ).strftime('%I:%M %p')
-    return converted_time
-
-
-def url_builder(city_id):
-    user_api = '49838e8b6cc542121457e6fc5d698463'  # Obtain yours form: http://openweathermap.org/
-    unit = 'metric'  # For Fahrenheit use imperial, for Celsius use metric, and the default is Kelvin.
-    api = 'http://api.openweathermap.org/data/2.5/weather?q='     # dont put it here put it down below .Search for your city ID here: http://openweathermap.org/help/city_list.txt / weather?id keep it dont change to forecast
-
-    full_api_url = api + str(city_id) + '&mode=json&units=' + unit + '&APPID=' + user_api
-    print(full_api_url)
-    return full_api_url
-
-
-def data_fetch(full_api_url):
-    url = urllib.request.urlopen(full_api_url)
-    output = url.read().decode('utf-8')
-    raw_api_dict = json.loads(output)
-    url.close()
-    return raw_api_dict
-
-
-
-
+from utils.common import *
+from api.openWeather import fetchWeatherData
 
 def data_output(data):
-    m_symbol = '\xb0' + 'C'
+    degree_symbol = '\xb0' + 'C'
     print('---------------------------------------')
-    print('Current weather in: {}, {}:'.format(data['city'], data['country']))
-    print(data['temp'], m_symbol, data['sky'])
-    print('Max: {}, Min: {}'.format(data['temp_max'], data['temp_min']))
+    print('Weather today in: {}, {}:'.format(data['city'], data['country']))
+    print(data['temp'], degree_symbol, data['sky'])
+    print('Min: {}, Max: {}'.format(data['temp_min'], data['temp_max']))
     print('')
-    print('Wind Speed: {}, Degree: {}'.format(data['wind'], data['wind_deg']))
-    print('Humidity: {}'.format(data['humidity']))
+    print('Speed of Wind: {}, Degree: {}'.format(data['wind'], data['wind_deg']))
     print('Cloud: {}'.format(data['cloudiness']))
+    print('Humidity: {}'.format(data['humidity']))
     print('Pressure: {}'.format(data['pressure']))
     print('Sunrise at: {}'.format(data['sunrise']))
     print('Sunset at: {}'.format(data['sunset']))
     print('')
-    print('Weather ID: {}'.format(data['typeid']))
-    print('Last update from the server: {}'.format(data['dt']))
+    print('ID for Weather is : {}'.format(data['typeid']))
+    print('Last update from the server was : {}'.format(data['dt']))
     print('---------------------------------------')
     global weatherid
     weatherid=('{}'.format(data['typeid']))
@@ -67,10 +36,10 @@ def data_output(data):
     citid= (data['city'])
     countryid= (data['country'])
     print ("-------------------------------")
-    #print (str(weathid))
-    #print (str(weatherdata))
-    #print (str(wtempid) + "°C")
-    #print (str(wwindid) + " MPH")
+    print (str(weathid))
+    print (str(weatherdata))
+    print (str(wtempid) + "°C")
+    print (str(wwindid) + " MPH")
     print (str(citid) + ", " + str(countryid))
     global root
     root = tkinter.Tk()
@@ -86,19 +55,17 @@ def data_output(data):
     #weather condition text
     wean=tkinter.Label(text=" "+str(weatherdata), font=("Courier", 28, 'bold')) # make weather update show here
     wean.grid(row=4, column=6)
-    
 
-
+city = input("Please enter the city to determine the weather :: ")
 if __name__ == '__main__':
     try:
-        data_output(weatherDataOrganizer(data_fetch(url_builder(city)))) #zip code id (xxxxxxx) goes here
+        printWeatherData(weatherDataOrganizer(fetchWeatherData(buildURLForCity(city))))
     except IOError:
         print('Something went wrong. Please try again.')
 
-
 # test print (weatherid)
 
-tempimg= tkinter.PhotoImage(file="id.gif")
+tempimg= tkinter.PhotoImage(file=os.path.join('images', 'id.gif'))
 imgtemp = tkinter.Label(image=tempimg)
 
 #temp image
