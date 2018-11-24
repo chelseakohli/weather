@@ -5,8 +5,7 @@ import tkinter
 import sys
 import os
 
-import utils.timeHelper
-import utils.common
+from services.organizeWeatherData import weatherDataOrganizer
 
 city = input("Please enter the City Name :")
 
@@ -92,7 +91,7 @@ def data_output(data):
 
 if __name__ == '__main__':
     try:
-        data_output(data_organizer(data_fetch(url_builder(city)))) #zip code id (xxxxxxx) goes here
+        data_output(weatherDataOrganizer(data_fetch(url_builder(city)))) #zip code id (xxxxxxx) goes here
     except IOError:
         print('Something went wrong. Please try again.')
 
