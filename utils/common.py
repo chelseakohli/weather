@@ -5,7 +5,7 @@ def buildURLForCity(cityId):
     unit = 'metric'  # For Fahrenheit use imperial, for Celsius use metric, and the default is Kelvin.
     host = 'http://api.openweathermap.org/data/2.5/weather?q='
 
-    APIURL = host + str(cityId) + '&mode=json&units=' + unit + '&APPID=' + userAPIKey
+    APIURL = host + str(cityId) + '&mode=json&units=' + unit + '&APPID=' + str('49838e8b6cc542121457e6fc5d698463')
     print("API URL is --->>> {}".format(APIURL))
     return APIURL
 

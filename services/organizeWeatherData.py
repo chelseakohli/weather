@@ -19,4 +19,5 @@ def weatherDataOrganizer(rawJSONPayload):
         typeid=rawJSONPayload['weather'][0]['id'],
         wtype=rawJSONPayload['weather'][0]['description']
     )
+    print(data)
     return data

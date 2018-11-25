@@ -1,5 +1,6 @@
 import requests
 import json
+import sys
 
 def fetchWeatherData(apiURL):
     # timeout is added for 3 seconds. If in 3 seconds request is not completed the program will terminate
