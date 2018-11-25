@@ -2,13 +2,12 @@ import os
 import tkinter
 
 def makeUI():
-    # test print (weatherid)
 
 	tempimg= tkinter.PhotoImage(file=os.path.join('images', 'id.gif'))
 	imgtemp = tkinter.Label(image=tempimg)
 
 	#temp image
-	tempimg=tkinter.PhotoImage(file=os.path.join('images', 'id.gif'))#finding the image make sure its in same folder and is a gif
+	tempimg=tkinter.PhotoImage(file=os.path.join('images', 'id.gif'))
 
 	tempweat = tempimg.zoom(3, 3)    #this new image is 3x the original
 	tempweat = tempimg.subsample(2,2)
@@ -246,7 +245,6 @@ def makeUI():
 		typew = tkinter.Label(image=weathertype)
 		typew.grid(row=0, column=6,  columnspan=3, rowspan=2, padx=5, pady=5)
 
-		   #sleet
 	if weatherid=='611':
 		print('Sleet')
 		weathertype = tkinter.PhotoImage(file=os.path.join('images', 'id8.gif'))
@@ -343,6 +341,7 @@ def displayUI(data):
     print('ID for Weather is : {}'.format(data['typeid']))
     print('Last update from the server was : {}'.format(data['dt']))
     print('---------------------------------------')
+
     global weatherid
     weatherid=('{}'.format(data['typeid']))
     weathertype=('{}'.format(data['wtype']))
@@ -355,23 +354,28 @@ def displayUI(data):
     wwindid= (data['wind'])
     citid= (data['city'])
     countryid= (data['country'])
+
     print ("-------------------------------")
-    print (str(weathid))
-    print (str(weatherdata))
-    print (str(wtempid) + "°C")
-    print (str(wwindid) + " MPH")
-    print (str(citid) + ", " + str(countryid))
+    # print (str(weathid))
+    # print (str(weatherdata))
+    # print (str(wtempid) + "°C")
+    # print (str(wwindid) + " MPH")
+    # print (str(citid) + ", " + str(countryid))
+
     global root
     root = tkinter.Tk()
-    root.geometry('900x515') # Controls the size of the window.
+	# Controls the size of the window.
+    root.geometry('900x515')
     root.title('Weather in:'+ " "  + str(citid) + ", " + str(countryid))
-    #root.wm_iconbitmap('home/hchanan/Desktop/PersonalProjects/weather/wicon.ico')
+
     #temperature
     temp=tkinter.Label(text= str(wtempid)+ "°C    ", font=("Courier", 28, 'bold'))
     temp.grid(row=0, column=5)
+
     #windspeed
     win=tkinter.Label(text= str(wwindid) + " MPH    ", font=("Courier", 28, 'bold'))
     win.grid(row=1, column=5)
+
     #weather condition text
     wean=tkinter.Label(text=" "+str(weatherdata), font=("Courier", 28, 'bold')) # make weather update show here
     wean.grid(row=4, column=6)

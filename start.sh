@@ -1,3 +1,3 @@
 #!/bin/bash
 
-source ./.env && python3.7 WeatherAPP.py
+source ./.env && python3.7 app.py
