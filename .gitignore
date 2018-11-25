@@ -2,5 +2,6 @@
 .idea
 *.iml
 venv/*
+.vscode
 .project
 .pydevproject

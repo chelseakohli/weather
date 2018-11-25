@@ -13,7 +13,7 @@ def weatherDataOrganizer(rawJSONPayload):
         sunrise=millisecondsToTime(rawJSONPayload.get('sys').get('sunrise')),
         sunset=millisecondsToTime(rawJSONPayload.get('sys').get('sunset')),
         wind=rawJSONPayload.get('wind').get('speed'),
-        wind_deg=rawJSONPayload.get('deg'),
+        wind_deg=rawJSONPayload.get('wind').get('deg'),
         dt=millisecondsToTime(rawJSONPayload.get('dt')),
         cloudiness=rawJSONPayload.get('clouds').get('all'),
         typeid=rawJSONPayload['weather'][0]['id'],
